@@ -84,7 +84,7 @@ latent space editing">
             <div class="publication-links">
               <!-- PDF Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/pdf/"
+                <a href=""
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -94,7 +94,7 @@ latent space editing">
               </span>
               <!-- arxiv Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/"
+                <a href=""
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -114,7 +114,7 @@ latent space editing">
               </span>
               <!-- Dataset Link. -->
               <span class="link-block">
-                <a href="https://github.com/trevineoorloff/Encode-in-Style"
+                <a href=""
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="far fa-images"></i>
@@ -160,8 +160,61 @@ latent space editing">
 
 <section class="section">
   <div class="container is-widescreen">
-    <!-- <div class="columns is-centered">
-      <div class="column is-full-width"> -->
+    <!-- Introduction. -->
+      <h2 class="title is-3">Introduction</h2>
+      <div class="content has-text-justified">
+        <p>
+          Manipulation of videos using latent representations is a challenging problem
+          since spatio-temporal and identity incoherence are highly noticeable. When
+          viewing a video, after the identity of the person is established, humans mostly
+          focus their attention on changes in the facial features (e.g., movements in mouth,
+          eyes, jaw, head-pose, etc.) rather than the features that remain constant such
+          as the facial geometry, hair, ears, etc. We build on this observation to extend
+          StyleGAN2 architecture and high-quality head-pose and face editing
+          approaches to create a novel latent-based facial video encoding that enables
+          high-resolution and data-efficient facial video re-synthesis.
+        </p>
+        <p>
+          We focus on re-synthesis and re-enactment of videos using a compact encoding
+          scheme. In re-synthesis, we encode a video using a low-dimensional representation
+          of small edits of an Identity-latent (ID-latent). Our approach is capable
+          of capturing and regenerating complex facial features while
+          achieving state-of-the-art re-synthesis performance at 1024<sup>2</sup>. Further, since the
+          encoding is independent of the subject in the video, we can substitute the IDlatent
+          (e.g., an inversion of a real face) of a different subject and apply the
+          face deformation parameters to generate high fidelity re-enactment video (i.e.,
+          puppeteering).
+        </p>
+        <p>
+          We extend single image generation models, namely StyleGAN2, StyleFlow,
+          and StyleSpace to the temporal dimension. Since the latent spaces are sparse
+          (i.e., only specific points in the space are visually valid and meaningful) we
+          propose optimization frameworks that anchor the latent-space attribute editing
+          to the real images. The computed latent paths between frames are non-linear
+          and therefore avoid limitations of common linear latent editors.
+          Video clip encoding is extremely compact, a single latent (18 × 512) corresponding
+          to an ID-latent and only 35 parameters per frame that control the
+          head-pose (3 parameters) and the facial features edits (32 parameters). The 70
+          bytes per frame are nearly half the state-of-the-art.
+          Specifically, we compute low-dimensional
+          edits that closely replicate complex and visually-entangled facial motions that
+          are consistent with real face deformations.
+        </p>
+        <p>
+          To the best of our knowledge we are the first,
+          <ul>
+            <li> in automating the editing of latent spaces in contrast to the prevailing
+            work on latent-space editing that illustrates plausible semantic visual results
+            (e.g. smiles, hair color, gaze) </li>
+            <li> to propose an extremely compact latent-based facial video encoding scheme </li>
+        </p>
+      </div>
+    <!--/ Introduction. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-widescreen">
         <h2 class="title is-3">Pipeline</h2>
           <div align="center">
             <img  width=80% style="max-width:100%;max-height:100%" class="img-responsive" src="data/pipeline.svg" alt="The seven-stage pipeline for encoding a video in latent space: (1) preprocessing,
@@ -170,8 +223,6 @@ latent space editing">
               The seven-stage pipeline for encoding a video in latent space: (1) preprocessing,
               (2) GAN inversion, (3) ID-latent selection, <br>(4) head-pose encoding, (5) facial attribute encoding, (6) generator fine-tuning, and (7) rendering
             </p>
-          <!-- </div>
-      </div> -->
     </div>
   </div>
 </section>
@@ -258,14 +309,6 @@ latent space editing">
             </video>
         </div>
       </div>
-      <!-- <div class="columns">
-        <div class="column">
-          <img  style="max-width:100%;max-height:100%;padding=0" class="img-responsive" src="data/fig_titles.svg" />
-        </div>
-        <div class="column">
-          <img  style="max-width:100%;max-height:100%;padding=0" class="img-responsive" src="data/fig_titles.svg" />
-        </div>
-      </div> -->
   </div>
 </section>
 
@@ -307,7 +350,7 @@ latent space editing">
 <section class="section">
   <div class="container is-widescreen">
     <h2 class="title is-3">Acknowledgments</h2>
-      We thank the community for free licensing and allowing editing of human data through <a href="https://www.pexels.com/"> https://www.pexels.com/ </a>.
+      We thank the community for free licensing and allowing editing of human data through <a href="https://www.pexels.com"> https://www.pexels.com </a>.
   </div>
 </section>
 
