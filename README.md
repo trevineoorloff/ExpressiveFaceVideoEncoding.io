@@ -1,2 +1,2 @@
-# Encode-in-Style.github.io
-The repository of the project page of "Encode-in-Style: Latent-based Video Encoding using StyleGAN2"
+# ExpressiveTalkingHeads.io
+The repository of the project page of "Expressive Talking Head Video Encoding in StyleGAN2 Latent-Space"
