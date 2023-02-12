@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="An end-to-end facial video encoding approach
+        content="An end-to-end expressive face video encoding approach
         that facilitates data-efficient high-quality video re-synthesis by optimizing
         low-dimensional edits of a single Identity-latent.">
-  <meta name="keywords" content="encode in style, video resynthesis, video encoding, StyleGAN, image inversion,
-latent space editing">
+  <meta name="keywords" content="expressive talking heads, video resynthesis, video encoding, StyleGAN, image inversion,
+latent space editing, latent manipulation">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Encode-in-Style: Latent-based Video Encoding using StyleGAN2</title>
+  <title>Expressive Talking Head Video Encoding in StyleGAN2 Latent-Space</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FBHPZN38ZP"></script>
@@ -40,9 +40,6 @@ latent space editing">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./data/js/fontawesome.all.min.js"></script>
-  <!-- <script src="./data/js/bulma-carousel.min.js"></script> -->
-  <!-- <script src="./data/js/bulma-slider.min.js"></script> -->
-  <!-- <script src="./data/js/index.js"></script> -->
 
   <style>
     table {
@@ -68,7 +65,7 @@ latent space editing">
     <div class="container is-widescreen">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Encode-in-Style: Latent-based Video Encoding <br>using StyleGAN2</h1>
+          <h1 class="title is-1 publication-title">Expressive Talking Head Video Encoding<br>in StyleGAN2 Latent-Space</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="">Trevine Oorloff</a>,</span>
@@ -104,12 +101,12 @@ latent space editing">
               </span>
               <!-- Code Link. -->
               <span class="link-block">
-                <a href="https://github.com/trevineoorloff/Encode-in-Style"
+                <a href=""
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
                   </span>
-                  <span>Code</span>
+                  <span>Code (Coming Soon) </span>
                   </a>
               </span>
               <!-- Dataset Link. -->
@@ -119,7 +116,7 @@ latent space editing">
                   <span class="icon">
                       <i class="far fa-images"></i>
                   </span>
-                  <span>Data</span>
+                  <span>Data (Coming Soon)</span>
                 </a>
               </span>
 
@@ -139,17 +136,25 @@ latent space editing">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We propose an end-to-end facial video encoding approach
-            that facilitates data-efficient high-quality video re-synthesis by optimizing
-            low-dimensional edits of a single Identity-latent. The approach builds
-            on StyleGAN2 image inversion and multi-stage non-linear latent-space
-            editing to generate videos that are nearly comparable to input videos. It
-            economically captures face identity, head-pose, and complex facial motions
-            at fine levels, and thereby bypasses training and person modeling
-            which tend to hamper many re-synthesis approaches. The approach is designed
-            with maximum data efficiency, where a single <i>W+</i> latent and 35
-            parameters per frame enable high-fidelity video rendering. This pipeline
-            can also be used for puppeteering (i.e., motion transfer).
+            While the recent advances in research on video re-enactment has yielded promising results, 
+            the approaches fall short in capturing the fine, detailed, and expressive facial features 
+            (e.g., lip-pressing, mouth puckering, mouth gaping, and wrinkles) which is crucial in generating 
+            realistic animated face videos. To this end, we propose an end-to-end expressive face video encoding 
+            approach that facilitates data-efficient high-quality video re-synthesis by optimizing 
+            low-dimensional edits of a single Identity-latent.
+            The approach builds on StyleGAN2 image inversion and multi-stage non-linear latent-space editing to  
+            generate  videos that are nearly comparable to input videos.
+            While existing StyleGAN latent-based editing techniques focus on simply generating plausible edits 
+            of static images, we automate the latent-space editing to capture the fine expressive facial 
+            deformations in a sequence of frames using an encoding that resides in the Style-latent-space 
+            (StyleSpace) of StyleGAN2. The  encoding thus obtained could be super-imposed on a single 
+            Identity-latent to facilitate re-enactment of face videos at 1024<sup>2</sup>. 
+            The proposed framework economically captures face identity,  head-pose, and complex expressive facial motions 
+            at fine levels, and thereby bypasses training, person modeling, dependence on landmarks/ keypoints, and low-resolution 
+            synthesis which tend to hamper most re-enactment approaches. 
+            The approach is designed with maximum data efficiency, where a single <i>W+</i> latent and 35 parameters  
+            per frame enable high-fidelity video rendering. This pipeline can also be used for puppeteering 
+            (i.e., motion transfer). 
           </p>
         </div>
       </div>
@@ -160,66 +165,51 @@ latent space editing">
 
 <section class="section">
   <div class="container is-widescreen">
-    <!-- Introduction. -->
-      <h2 class="title is-3">Introduction</h2>
-      <div class="content has-text-justified">
-        <p>
-          Manipulation of videos using latent representations is a challenging problem
-          since spatio-temporal and identity incoherence are highly noticeable. When
-          viewing a video, after the identity of the person is established, humans mostly
-          focus their attention on changes in the facial features (e.g., movements in mouth,
-          eyes, jaw, head-pose, etc.) rather than the features that remain constant such
-          as the facial geometry, hair, ears, etc. We build on this observation to extend
-          StyleGAN2 architecture and high-quality head-pose and face editing
-          approaches to create a novel latent-based facial video encoding that enables
-          high-resolution and data-efficient facial video re-synthesis.
-        </p>
-        <p>
-          We focus on re-synthesis and re-enactment of videos using a compact encoding
-          scheme. In re-synthesis, we encode a video using a low-dimensional representation
-          of small edits of an Identity-latent (ID-latent). Our approach is capable
-          of capturing and regenerating complex facial features while
-          achieving state-of-the-art re-synthesis performance at 1024<sup>2</sup>. Further, since the
-          encoding is independent of the subject in the video, we can substitute the IDlatent
-          (e.g., an inversion of a real face) of a different subject and apply the
-          face deformation parameters to generate high fidelity re-enactment video (i.e.,
-          puppeteering).
-        </p>
-        <p>
-          We extend single image generation models, namely StyleGAN2, StyleFlow,
-          and StyleSpace to the temporal dimension. Since the latent spaces are sparse
-          (i.e., only specific points in the space are visually valid and meaningful) we
-          propose optimization frameworks that anchor the latent-space attribute editing
-          to the real images. The computed latent paths between frames are non-linear
-          and therefore avoid limitations of common linear latent editors.
-          Video clip encoding is extremely compact, a single latent (18 × 512) corresponding
-          to an ID-latent and only 35 parameters per frame that control the
-          head-pose (3 parameters) and the facial features edits (32 parameters). The 70
-          bytes per frame are nearly half the state-of-the-art.
-          Specifically, we compute low-dimensional
-          edits that closely replicate complex and visually-entangled facial motions that
-          are consistent with real face deformations.
-        </p>
-        <p>
-          To the best of our knowledge we are the first, (1) in automating the editing of latent spaces in contrast to the prevailing
-          work on latent-space editing that illustrates plausible semantic visual results (e.g. smiles, hair color, gaze),
-          and (2) to propose an extremely compact latent-based facial video encoding scheme that captures extremely fine,
-          rich, and complex facial deformations.
-        </p>
-      </div>
-    <!--/ Introduction. -->
+        <h2 class="title is-3">Pipeline</h2>
+          <div align="center">
+            <img  width=70% style="max-width:100%;max-height:100%" class="img-responsive" src="data/pipeline.svg" alt="The multi-stage pipeline for encoding a video in latent-space: 
+            The (1) pre-processing stage aligns the input sequence of frames, 
+            which are fed to the (2) GAN inversion to obtain the corresponding 
+            sequence of <i>W+</i> latents. Out of which the best inversion 
+            which also has near frontal head-pose is chosen to be the ID-latent 
+            in the (3) ID-latent selection stage. The (4) Head-pose encoding stage, 
+            encodes the yaw and pitch of the target frames, in reference to the 
+            ID-latent while generating a series of head-pose adjusted ID-latents. 
+            Subsequently, the (5) facial-attribute encoding stage, encodes the 
+            facial deformations using 32 parameters anchoring onto the head-pose 
+            adjusted ID-latents. Finally, the encoded parameters (35/frame) and 
+            the ID-latent is used to synthesize the re-enacted frames at the 
+            (6) Rendering stage. "/>
+            <p>
+              The multi-stage pipeline for encoding a video in latent-space: 
+              The <b>(1) pre-processing</b> stage aligns the input sequence of frames, 
+              which are fed to the <br> <b>(2) GAN inversion</b> to obtain the corresponding 
+              sequence of <i>W+</i> latents. Out of which the best inversion 
+              which also has near frontal head-pose is chosen to be the ID-latent 
+              in the <br> <b>(3) ID-latent selection</b> stage. The <b>(4) Head-pose encoding</b> stage, 
+              encodes the yaw and pitch of the target frames, in reference to the 
+              ID-latent while generating a series of head-pose adjusted ID-latents. 
+              Subsequently, the <b>(5) facial-attribute encoding</b> stage, encodes the 
+              facial deformations using 32 parameters anchoring onto the head-pose 
+              adjusted ID-latents. Finally, the encoded parameters (35/frame) and 
+              the ID-latent is used to synthesize the re-enacted frames at the 
+              <b>(6) Rendering</b> stage. 
+            </p>
+    </div>
   </div>
 </section>
 
 <section class="section">
   <div class="container is-widescreen">
-        <h2 class="title is-3">Pipeline</h2>
+        <h2 class="title is-3">Expressive Facial Features</h2>
           <div align="center">
-            <img  width=80% style="max-width:100%;max-height:100%" class="img-responsive" src="data/pipeline.svg" alt="The seven-stage pipeline for encoding a video in latent space: (1) preprocessing,
-            (2) GAN inversion, (3) ID-latent selection, (4) head-pose encoding, (5) facial attribute encoding, (6) generator fine-tuning, and (7) rendering"/>
+            <img  width=80% style="max-width:100%;max-height:100%" class="img-responsive" src="data/results_image.svg" alt="The proposed approach was carefully designed such that complex and fine expressive 
+            face details such as lip-pressing, mouth puckering, mouth gaping, and wrinkles around
+            the eyes, mouth, nasal-bridge, and forehead are well-captured."/>
             <p>
-              The seven-stage pipeline for encoding a video in latent space: (1) preprocessing,
-              (2) GAN inversion, (3) ID-latent selection, <br>(4) head-pose encoding, (5) facial attribute encoding, (6) generator fine-tuning, and (7) rendering
+              The proposed encoding scheme is carefully designed such that complex and fine expressive 
+              facial features such as <br>lip-pressing, mouth puckering, mouth gaping, and wrinkles around
+              the eyes, mouth, nasal-bridge, and forehead are well-captured.
             </p>
     </div>
   </div>
@@ -228,84 +218,31 @@ latent space editing">
 <section class="section">
   <div class="container is-widescreen">
     <h2 class="title is-3">Video Re-Synthesis</h2>
-      <div class="columns">
-        <div class="column">
-          <img  style="max-width:100%;max-height:100%;padding=0" class="img-responsive" src="data/fig_titles.svg" />
-        </div>
-        <div class="column">
-          <img  style="max-width:100%;max-height:100%;padding=0" class="img-responsive" src="data/fig_titles.svg" />
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column">
-            <video id="6671636_6K_SS" autoplay controls muted loop width="100%">
+      <div align="center">
+        <video id="Resynthesis_Sample_1" autoplay controls muted loop width="70%">
 
-              <source src="data/video/Video Re-Synthesis/6671636_6K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
-        <div class="column">
-            <video id="7261088_6K_SS" autoplay controls muted loop width="100%">
-              <source src="data/video/Video Re-Synthesis/7261088_6K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
+          <source src="data/video/Video Re-Synthesis/Resynthesis_1.mp4"
+                  type="video/mp4">
+        </video>
       </div>
-      <div class="columns">
-        <div class="column">
-            <video id="9464867_6K_SS" autoplay controls muted loop width="100%">
-              <source src="data/video/Video Re-Synthesis/9464867_6K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
-        <div class="column">
-            <video id="8775004_6K_SS" autoplay controls muted loop width="100%">
-              <source src="data/video/Video Re-Synthesis/8775004_6K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
+      <div align="center">
+        <video id="Resynthesis_Sample_2" autoplay controls muted loop width="70%">
+          <source src="data/video/Video Re-Synthesis/Resynthesis_2.mp4"
+                  type="video/mp4">
+        </video>
       </div>
-      <div class="columns">
-        <div class="column">
-            <video id="6671636_6K_SS" autoplay controls muted loop width="100%">
-              <source src="data/video/Video Re-Synthesis/6952250_6K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
-        <div class="column">
-            <video id="6671636_6K_SS" autoplay controls muted loop width="100%">
-              <source src="data/video/Video Re-Synthesis/4491301_6K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
+      <div align="center">
+        <video id="Resynthesis_Sample_3" autoplay controls muted loop width="70%">
+
+          <source src="data/video/Video Re-Synthesis/Resynthesis_3.mp4"
+                  type="video/mp4">
+        </video>
       </div>
-      <div class="columns">
-        <div class="column">
-            <video id="6671636_6K_SS" autoplay controls muted loop width="100%">
-              <source src="data/video/Video Re-Synthesis/8513113_6K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
-        <div class="column">
-            <video id="6671636_6K_SS" autoplay controls muted loop width="100%">
-              <source src="data/video/Video Re-Synthesis/8724452_6K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column">
-            <video id="6671636_6K_SS" autoplay controls muted loop width="100%">
-              <source src="data/video/Video Re-Synthesis/Obama4_6K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
-        <div class="column">
-            <video id="6671636_6K_SS" autoplay controls muted loop width="100%">
-              <source src="data/video/Video Re-Synthesis/7644024_6K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
+      <div align="center">
+        <video id="Resynthesis_Sample_4" autoplay controls muted loop width="70%">
+          <source src="data/video/Video Re-Synthesis/Resynthesis_4.mp4"
+                  type="video/mp4">
+        </video>
       </div>
   </div>
 </section>
@@ -313,35 +250,21 @@ latent space editing">
 <section class="section">
   <div class="container is-widescreen">
     <h2 class="title is-3">Puppeteering</h2>
-      <div class="columns">
-        <div class="column">
-            <video id="6952253_4K_SS_P_4694334_5K_SS_4098429_5K_SS" autoplay controls muted loop width="100%">
+    <div align="center">
+      <video id="Puppeteering_Sample_1" autoplay controls muted loop width="70%">
 
-              <source src="data/video/Puppeteering/6952253_4K_SS_P_4694334_5K_SS_4098429_5K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
-        <div class="column">
-            <video id="4587903_4K_SS_P_7082918_5K_SS_7261088_4K_SS" autoplay controls muted loop width="100%">
-              <source src="data/video/Puppeteering/4587903_4K_SS_P_7082918_5K_SS_7261088_4K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
-      </div>
-      <div class="columns">
-        <div class="column">
-            <video id="7261088_4K_SS_P_8724240_5K_SS_4488805_5K_SS" autoplay controls muted loop width="100%">
-              <source src="data/video/Puppeteering/7261088_4K_SS_P_8724240_5K_SS_4488805_5K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
-        <div class="column">
-            <video id="4837248_4K_SS_P_8066960_5K_SS_4491301_5K_SS" autoplay controls muted loop width="100%">
-              <source src="data/video/Puppeteering/4837248_4K_SS_P_8066960_5K_SS_4491301_5K_SS.mp4"
-                      type="video/mp4">
-            </video>
-        </div>
-      </div>
+        <source src="data/video/Puppeteering/Puppeteering_1.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+    <div align="center">
+      <video id="Puppeteering_Sample_2" autoplay controls muted loop width="70%">
+
+        <source src="data/video/Puppeteering/Puppeteering_2.mp4"
+                type="video/mp4">
+      </video>
+    </div>
+      
   </div>
 </section>
 
@@ -355,8 +278,8 @@ latent space editing">
 <section class="section" id="BibTeX">
   <div class="container is-widescreen content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{oorloff2022encodeinstyle,
-      title={Encode-in-Style: Latent-based Video Encoding using StyleGAN2},
+    <pre><code>@article{oorloff2022expressivetalkingheads,
+      title={Expressive Talking Head Video Encoding in StyleGAN2 Latent-Space},
       author={Trevine Oorloff and Yaser Yaoob},
       year={2022},
       eprint={2203.14512},
